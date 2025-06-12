@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os 
 
 # --- Halaman dan Judul ---
 st.set_page_config(
@@ -10,11 +11,14 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- Fungsi untuk Memuat Data (dengan cache agar lebih cepat) ---
+# Dapatkan path absolut ke direktori tempat skrip ini berada
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Gabungkan path direktori dengan nama file CSV
+DATA_PATH = os.path.join(BASE_DIR, "netflix_cleaned.csv")
+
 @st.cache_data
 def load_data():
-    data = pd.read_csv("netflix_cleaned.csv")
-    data['date_added'] = pd.to_datetime(data['date_added'])
+    data = pd.read_csv(DATA_PATH)
     return data
 
 # --- Memuat Data ---
